@@ -1,0 +1,52 @@
+{
+  "name": "ORION BAS AI Copilot Development Container",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "forwardPorts": [8000, 8080, 9090, 3001],
+  "portsAttributes": {
+    "8000": {
+      "label": "ORION API & OpenAPI Docs",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "ORION Live Video Stream (MJPEG)",
+      "onAutoForward": "openBrowser"
+    },
+    "9090": {
+      "label": "Prometheus Metrics",
+      "onAutoForward": "silent"
+    },
+    "3001": {
+      "label": "Grafana Dashboard",
+      "onAutoForward": "silent"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/workspace/.venv/bin/python",
+        "python.formatting.provider": "none",
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit"
+          }
+        },
+        "mypy-type-checker.args": ["--config-file=/workspace/pyproject.toml"]
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "charliermarsh.ruff",
+        "ms-python.mypy-type-checker",
+        "tamasfe.even-better-toml",
+        "redhat.vscode-yaml"
+      ]
+    }
+  },
+  "remoteUser": "vscode",
+  "postCreateCommand": "uv venv .venv && uv pip install -e \".[all]\" && uv pip install pyside6 pyttsx3 && python scripts/doctor.py"
+}

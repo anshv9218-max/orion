@@ -1,0 +1,40 @@
+# ==============================================================================
+# Model Registry Configuration (Verified Weight Checksums & Flight Metadata)
+# ==============================================================================
+registry:
+  storage_backend: "local_filesystem"
+  base_path: "./models/weights"
+  verify_checksums: true
+  hash_algorithm: "sha256"
+
+models:
+  detection:
+    model_id: "yolo11n"
+    framework: "torch"
+    file_path: "yolo11n.pt"
+    input_resolution: [640, 640]
+    expected_sha256: "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1"
+    precision: "fp16"
+    batch_size: 1
+    classes: ["person", "bottle", "cup", "scissors", "cell phone", "chair", "laptop"]
+
+  pose:
+    model_id: "yolo11n-pose"
+    framework: "torch"
+    file_path: "yolo11n-pose.pt"
+    topology: "coco_17"
+    expected_sha256: "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0"
+    precision: "fp16"
+    batch_size: 1
+
+  temporal_har:
+    model_id: "stgcn_har_v1"
+    framework: "torch"
+    file_path: "stgcn_har_v1.pt"
+    manifest_path: "stgcn_har_v1.manifest.json"
+    window_size_frames: 32
+    stride_frames: 8
+    expected_sha256: "41570e8d4471b6596abe459fd93c6f34546c0059d974e0629dc886451a3e95ed"
+    precision: "fp32"
+    classes: ["prepare_workstation", "reach_tool", "grasp_tool", "manipulate_sample", "inspect_chamber", "idle"]
+
